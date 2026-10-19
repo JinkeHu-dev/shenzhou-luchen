@@ -1,0 +1,10 @@
+{
+  "name": "shenzhou-luchen",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "verify": "node tools/verify.mjs"
+  }
+}

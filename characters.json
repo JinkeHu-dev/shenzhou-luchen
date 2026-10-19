@@ -1,0 +1,10 @@
+{
+  "hwd_huanwen": {
+    "name": "染紫鎏痕·桓温",
+    "status": "stable",
+    "designVersion": "4.2",
+    "implementationVersion": "4.2.0",
+    "source": "extension/src/characters/huanwen",
+    "documentation": "docs/characters/huanwen"
+  }
+}
