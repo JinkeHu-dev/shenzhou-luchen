@@ -1,4 +1,4 @@
-// Huan Wen 4.1 skill implementation for NoName.
+// Huan Wen 4.2 skill implementation for NoName.
 // Copyright (C) 2026 JinkeHu-dev
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -209,16 +209,16 @@ const skills = {
     discard: false,
     lose: false,
     delay: false,
-    prompt: "用一张手牌交换牌堆底的一张牌，然后亮出牌堆顶三张牌",
+    prompt: "用一张手牌交换牌堆顶的一张牌，然后亮出牌堆顶三张牌",
     check(card) { return 6 - get.value(card); },
     async content(event, trigger, player) {
       const payment = event.cards?.[0];
       if (!payment || !player.getCards("h").includes(payment)) return;
 
-      const exchanged = get.bottomCards(1);
+      const exchanged = get.cards(1);
       if (!exchanged.length) return;
       await game.cardsGotoOrdering(exchanged);
-      await player.lose({ cards: [payment], position: ui.cardPile, visible: false });
+      await player.lose({ cards: [payment], position: ui.cardPile, visible: false, insert_card: true });
       await player.gain({ cards: exchanged, animate: "draw" });
 
       const revealed = get.cards(3);
@@ -229,7 +229,7 @@ const skills = {
       event.hwd_sanfa_x = x;
       game.log(player, "发动", "#g【三伐】", "，X为", x);
 
-      const { bottom, top, discards } = await arrangeSanfa(player, revealed, x);
+      const { top, bottom, discards } = await arrangeSanfa(player, revealed, x, 2);
       if (top.length) {
         await game.cardsGotoPile(top.slice().reverse(), "insert");
         game.addCardKnower(top, player);
@@ -239,6 +239,7 @@ const skills = {
         await game.cardsGotoPile(bottom.slice().reverse());
         game.addCardKnower(bottom, player);
       }
+
       if (player.isIn()) {
         const drawn = get.bottomCards(x);
         if (drawn.length) await player.gain({ cards: drawn, animate: "draw" });
