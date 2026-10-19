@@ -1,4 +1,4 @@
-// Huan Wen 2.0 skill implementation for NoName.
+// Huan Wen 3.0 skill implementation for NoName.
 // Copyright (C) 2026 JinkeHu-dev
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -219,8 +219,7 @@ const skills = {
       if (!exchanged.length) return;
       await game.cardsGotoOrdering(exchanged);
       await player.lose({ cards: [payment], position: ui.cardPile, visible: false });
-      player.addSkill("hwd_sanfa_keep");
-      await player.gain({ cards: exchanged, animate: "draw", gaintag: [SANFA] });
+      await player.gain({ cards: exchanged, animate: "draw" });
 
       const revealed = get.cards(3);
       if (!revealed.length || !player.isIn()) return;
@@ -231,7 +230,7 @@ const skills = {
       game.log(player, "发动", "#g【三伐】", "，X为", x);
 
       const { gains, top, discards } = await arrangeSanfa(player, revealed, x);
-      if (gains.length) await player.gain({ cards: gains, animate: "gain2", gaintag: [SANFA] });
+      if (gains.length) await player.gain({ cards: gains, animate: "gain2" });
       if (top.length) {
         await game.cardsGotoPile(top.slice().reverse(), "insert");
         game.addCardKnower(top, player);
@@ -249,15 +248,6 @@ const skills = {
     },
     ai: { order: 9, result: { player: 1 }, threaten: 1.8 },
     subSkill: {
-      keep: {
-        charlotte: true,
-        mod: {
-          ignoredHandcard(card) { if (card.hasGaintag(SANFA)) return true; },
-          cardDiscardable(card, player, name) {
-            if (name === "phaseDiscard" && card.hasGaintag(SANFA)) return false;
-          },
-        },
-      },
       unlimited: {
         charlotte: true,
         mark: true,

@@ -1,4 +1,4 @@
-# 染紫鎏痕·桓温 2.0
+# 染紫鎏痕·桓温 3.0
 
 [返回神州陆沉当前版本](https://github.com/JinkeHu-dev/shenzhou-luchen) · [阅读4.2策划书](https://github.com/JinkeHu-dev/shenzhou-luchen/blob/main/docs/characters/huanwen/design/%E6%9F%93%E7%B4%AB%E9%8E%8F%E7%97%95%C2%B7%E6%A1%93%E6%B8%A9%E7%AD%96%E5%88%92%E4%B9%A6_v4.2.md)
 
@@ -6,13 +6,12 @@
 
 ## 版本说明
 
-- 遂宁黑色判定改为对所响应牌的使用者造成1点伤害。
-- 三伐在同花色结果下提供阶段内的高额次数与不可响应收益。
-- 三伐所得牌仍不计入手牌上限。
-- 测试结论：防御转化、资源保留和爆发叠加后强度过高。
-- 标签：`huanwen-v2.0.0`
+- 删除“三伐所得牌不计入手牌上限”。
+- 保留遂宁、伏火、三伐、慎图的四技能骨架。
+- 测试结论：长期资源优势降低，但三伐仍需要更清楚的牌堆操作目标。
+- 标签：`huanwen-v3.0.0`
 
-Direct-damage Suining was established, but Sanfa's phase-wide rewards and hand-limit exemption proved excessive.
+The hand-limit exemption was removed. The four-skill structure remained, while Sanfa still needed a clearer deck-control identity.
 
 ## 源码
 
