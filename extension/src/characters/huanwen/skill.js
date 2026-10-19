@@ -1,4 +1,4 @@
-// Huan Wen 3.0 skill implementation for NoName.
+// Huan Wen 4.0 skill implementation for NoName.
 // Copyright (C) 2026 JinkeHu-dev
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -229,37 +229,54 @@ const skills = {
       event.hwd_sanfa_x = x;
       game.log(player, "发动", "#g【三伐】", "，X为", x);
 
-      const { gains, top, discards } = await arrangeSanfa(player, revealed, x);
-      if (gains.length) await player.gain({ cards: gains, animate: "gain2" });
+      const { bottom, top, discards } = await arrangeSanfa(player, revealed, x);
       if (top.length) {
         await game.cardsGotoPile(top.slice().reverse(), "insert");
         game.addCardKnower(top, player);
       }
       if (discards.length) await game.cardsDiscard(discards);
+      if (bottom.length) {
+        await game.cardsGotoPile(bottom.slice().reverse());
+        game.addCardKnower(bottom, player);
+      }
+      if (player.isIn()) {
+        const drawn = get.bottomCards(x);
+        if (drawn.length) await player.gain({ cards: drawn, animate: "draw" });
+      }
       if (!player.isIn()) return;
 
       if (x >= 2) {
-        player.addTempSkill("hwd_sanfa_unlimited", { player: "phaseUseAfter" });
+        player.addTempSkill("hwd_sanfa_more", { player: "phaseUseAfter" });
+        player.addMark("hwd_sanfa_more", 1, false);
       }
       if (x === 3) {
-        player.addTempSkill("hwd_sanfa_unrespondable", { player: "phaseUseAfter" });
+        player.addTempSkill("hwd_sanfa_next", { player: "phaseUseAfter" });
         await player.gainMaxHp(1);
       }
     },
     ai: { order: 9, result: { player: 1 }, threaten: 1.8 },
     subSkill: {
-      unlimited: {
+      more: {
         charlotte: true,
+        onremove: true,
         mark: true,
         marktext: "伐",
-        intro: { content: "此出牌阶段使用牌无次数限制。" },
-        mod: { cardUsable() { return Infinity; } },
+        intro: {
+          content(storage, player) {
+            return `此出牌阶段使用【杀】的次数上限+${player.countMark("hwd_sanfa_more")}。`;
+          },
+        },
+        mod: {
+          cardUsable(card, player, num) {
+            if (card.name === "sha") return num + player.countMark("hwd_sanfa_more");
+          },
+        },
       },
-      unrespondable: {
+      next: {
         charlotte: true,
         mark: true,
         marktext: "袭",
-        intro: { content: "此出牌阶段使用的牌不可被响应。" },
+        intro: { content: "此出牌阶段使用的下一张牌不可被响应。" },
         trigger: { player: "useCard1" },
         forced: true,
         silent: true,
@@ -267,8 +284,9 @@ const skills = {
         filter(event, player) {
           return event.getParent("phaseUse")?.player === player;
         },
-        async content(event, trigger) {
+        async content(event, trigger, player) {
           trigger.directHit.addArray(game.players);
+          player.removeSkill("hwd_sanfa_next");
         },
       },
     },

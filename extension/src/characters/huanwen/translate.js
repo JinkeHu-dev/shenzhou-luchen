@@ -1,9 +1,9 @@
-// Chinese display text follows Design Document 3.0.
+// Chinese display text follows Design Document 4.0.
 // Copyright (C) 2026 JinkeHu-dev
 // SPDX-License-Identifier: GPL-3.0-only
 
 export default {
-  hwd_huanwen: "桓温·3.0",
+  hwd_huanwen: "桓温·4.0",
   hwd_huanwen_prefix: "染紫鎏痕",
   hwd_cheng: "成",
   hwd_suining: "遂宁",
@@ -16,9 +16,9 @@ export default {
   hwd_fuhuo_shan: "伏火·闪",
   hwd_fuhuo_huogong: "伏火·火攻",
   hwd_sanfa: "三伐",
-  hwd_sanfa_info: "出牌阶段限一次，你可以用一张手牌交换牌堆底的一张牌，然后亮出牌堆顶的三张牌，获得其中至多X张（X为其中同花色牌数的最大值），其余的牌各置于牌堆顶或弃置。若X不小于2，你于此阶段使用牌无次数限制；若X为3，你于此阶段使用的牌不可被响应，且你加1点体力上限。",
-  hwd_sanfa_unlimited: "三伐·无限次数",
-  hwd_sanfa_unrespondable: "三伐·不可响应",
+  hwd_sanfa_info: "出牌阶段限一次，你可以用一张手牌交换牌堆底的一张牌，然后亮出牌堆顶的三张牌，将其中至多X张置入牌堆底（X为其中同花色牌数的最大值），其余的牌各置于牌堆顶或弃置，然后从牌堆底摸X张牌。若X不小于2，你于此阶段能使用【杀】的次数+1；若X为3，你于此阶段使用的下一张牌不可被响应，且你加1点体力上限。",
+  hwd_sanfa_more: "三伐·额外次数",
+  hwd_sanfa_next: "三伐·下一牌",
   hwd_shentu: "慎图",
   hwd_shentu_info: "锁定技，出牌阶段结束时，若你于此阶段造成的伤害值小于你发动〖三伐〗的次数，你减1点体力上限。",
 };
